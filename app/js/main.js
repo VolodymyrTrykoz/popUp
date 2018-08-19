@@ -29,15 +29,11 @@ $(document).ready(() => {
     });
 
     $(document).on("mouseup", (e)=>{
-        //checking here whether event occurred when popUp is visible
+        //checking here whether event occurred when popUp is visible (open flag)
         //but clicked target is outside popUp div
-        if (open && !$popUp.is(e.target) && ($(e.target).closest('.popUp').length === 0)) {
-            closePopUp();
-        }
-        // also bind two trigger elements here to fire function
-        else if ($(e.target).is('.btn--cancel') || $(e.target).is('.popUp__close img')){
-            closePopUp();
-        }
+        //or event was triggered with wto next elements
+        if ((open && !$popUp.is(e.target)) || ($(e.target).is('.btn--cancel, .popUp__close img'))) {
+        closePopUp();}
     });
 
     $uninst.on('click', ()=> {
