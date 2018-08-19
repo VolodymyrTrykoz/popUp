@@ -16,13 +16,12 @@ var     gulp           = require('gulp'),
 		notify         = require('gulp-notify'),
     	babel          = require('gulp-babel');
 
-// Скрипты проекта
+// Scripts of project
 gulp.task('scripts', function() {
 	return gulp.src([
         'app/libs/jquery-3.3.1/jquery-3.3.1.min.js',
         'app/libs/gsap/src/minified/TweenMax.min.js',
         'app/libs/scrollmagic/scrollmagic/minified/plugins/animation.gsap.min.js',
-        'app/libs/gsap/src/minified/plugins/DrawSVGPlugin.min.js',
         'app/js/js2015.js',
 		])
 	.pipe(concat('scripts.min.js'))
