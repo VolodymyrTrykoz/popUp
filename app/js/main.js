@@ -8,6 +8,8 @@ $(document).ready(() => {
     const $path2 = $('.alert__p--2');
     const length = $path[0].getTotalLength();
     let open = false;
+
+    // dynamically set css properties of gradient position with help of css variables depending on mouse movement
     $button.on('mousemove', (e) => {
         const $e = $(e.target);
         const el = e.target;
@@ -22,23 +24,23 @@ $(document).ready(() => {
         $body.addClass('body-blurred');
         let tl = new TimelineLite();
         tl
-            .to($button, 0.5, { scaleX:0, scaleY:0, y:-500,  ease: Power1.easeInOut, onComplete: showPopUp, onCompleteParams: [$button, '+=1']})
+            .to($button, 0.5, { scaleX:0, scaleY:0,  ease: Power1.easeInOut, onComplete: showPopUp, onCompleteParams: [$button, '+=1']})
             .set($path, { strokeDashoffset : `${length}`,  ease: Power1.easeInOut});
     });
 
     $(document).on("mouseup", (e)=>{
+        //checking here whether event occurred when popUp is visible
+        //but clicked target is outside popUp div
         if (open && !$popUp.is(e.target) && ($(e.target).closest('.popUp').length === 0)) {
             closePopUp();
-            open = false;
         }
+        // also bind two trigger elements here to fire function
         else if ($(e.target).is('.btn--cancel') || $(e.target).is('.popUp__close img')){
             closePopUp();
-            open = false;
         }
     });
 
     $uninst.on('click', ()=> {
-        open = false;
         closePopUp(setTimeout( ()=> {
             alert('DONE')
         }, 500 ))
@@ -46,12 +48,14 @@ $(document).ready(() => {
 
     function closePopUp() {
         $body.removeClass('body-blurred');
+        open = false;
         let tl = new TimelineLite();
+        // setting initial properties to element for further animation
         tl
             .set($path, { fill : '#fff'})
             .set($path, { strokeDashoffset : `${length}`})
             .set($path2, { autoAlpha: 0 })
-            .to($popUp, 0.5, { scaleX:0, scaleY:0, y:-500,  ease: Power1.easeInOut, onComplete: () => {$popUp.addClass('hidden')}})
+            .to($popUp, 0.5, { scaleX:0, scaleY:0,  ease: Power1.easeInOut, onComplete: () => {$popUp.addClass('hidden')}})
             .to($button, 0.5, { scaleX:1, scaleY:1, y:0,  ease: Power1.easeInOut});
     }
 
@@ -60,7 +64,7 @@ $(document).ready(() => {
         drawSVG();
         let tl = new TimelineLite();
         tl
-          .fromTo($popUp, 0.5, { scaleX:0, scaleY:0, y:-500,  ease: Power1.easeInOut},{scaleX:1, scaleY:1, y:0})
+          .fromTo($popUp, 0.5, { scaleX:0, scaleY:0,  ease: Power1.easeInOut},{scaleX:1, scaleY:1})
           .from('.popUp__alert', 1, {autoAlpha:0})
           .from('p', 0.5, {opacity:0, y:20})
           .staggerFrom($('.btn'), 0.5, {opacity:0, y:15}, 0.2)
@@ -69,6 +73,7 @@ $(document).ready(() => {
 
     function drawSVG(){
         let tl = new TimelineLite();
+        //animate stroke-dashoffset svg attribute to create drawing effect
         tl
             .to($path2, 0.5, { autoAlpha: 1 })
             .to($path, 0.7, { strokeDashoffset : 0,  ease: Power1.easeInOut})
