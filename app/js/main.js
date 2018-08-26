@@ -75,5 +75,4 @@ $(document).ready(() => {
             .to($path, 0.7, { strokeDashoffset : 0,  ease: Power1.easeInOut})
             .to($path, 0.4, { fill : '#FF3B30'}, '-=0.3');
     }
-
 });

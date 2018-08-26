@@ -43,7 +43,7 @@ gulp.task('browser-sync', function() {
 gulp.task('babel', () =>
     gulp.src('app/js/main.js')
         .pipe(babel({presets: ['env']}))
-        .pipe(concat('js2015.js'))
+        .pipe(concat('jsBabel.js'))
         .pipe(gulp.dest('app/js'))
 );
 
